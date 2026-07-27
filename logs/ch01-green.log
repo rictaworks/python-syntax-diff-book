@@ -48,3 +48,76 @@ True
 'foobar'
 >>> add.__annotations__
 {'a': <class 'int'>, 'b': <class 'int'>, 'return': <class 'int'>}
+
+---
+
+## 追記（issue #9: 第1章のコードリストを18本目標に合わせて5本追加）
+
+requirements.md 5.2の目標18本（ch01+ch02）に対する不足分を埋める
+ため、1.7節の残り8項目のうち5項目（#4・#5・#8・#9・#11）へ予告
+コード（list_05〜list_09）を追加した。ch01は4本→9本、ch01+ch02
+合計は13本→18本になり、目標本数と一致する。
+
+検証日: 2026-07-27
+検証環境: Python 3.12.1（本リポジトリのdevcontainerは未整備のため
+Codespace既定環境で暫定検証。対象バージョンは3.13系。
+ENV/DEVELOPMENT.md参照。3.13でのCI実行はGitHub Actionsで別途行う）
+
+$ python3 -m pytest -v
+============================= test session starts ==============================
+platform linux -- Python 3.12.1, pytest-9.1.1, pluggy-1.6.0
+collecting ... collected 40 items
+
+code/ch01/test_ch01.py::test_mis_indented_block_raises_indentation_error PASSED
+code/ch01/test_ch01.py::test_classify_truthiness_treats_zero_empty_and_none_as_false PASSED
+code/ch01/test_ch01.py::test_none_is_singleton_and_not_equal_to_false PASSED
+code/ch01/test_ch01.py::test_append_and_share_mutates_through_both_names PASSED
+code/ch01/test_ch01.py::test_type_hint_is_not_enforced_at_runtime PASSED
+code/ch01/test_ch01.py::test_list_comprehension_builds_squares_in_one_line PASSED
+code/ch01/test_ch01.py::test_for_else_runs_else_only_without_break PASSED
+code/ch01/test_ch01.py::test_self_is_explicit_and_attributes_live_in_dict PASSED
+code/ch01/test_ch01.py::test_eafp_tries_first_and_handles_key_error PASSED
+code/ch01/test_ch01.py::test_second_import_reuses_cached_module_without_rerun PASSED
+... (code/ch02, build/ 配下 計30件 省略、全件PASSED)
+
+============================== 40 passed in 0.17s ===============================
+
+$ python3 -m ruff check .
+All checks passed!
+
+$ python3 build/lint_code_width.py --repo-root . \
+    --config build/config/lint-width.json --verbose
+INFO lint_code_width: 桁数lint 検査対象ファイル数: 15
+INFO lint_code_width: 桁数lint: 違反なし。
+
+--- 追加リストの観測出力（本文の実行ログに転記） ---
+
+[list_05] 内包表記:
+>>> squares_under(5)
+[0, 1, 4, 9, 16]
+
+[list_06] for-else:
+>>> find_first_negative([1, 2, 3])
+'no negative value'
+>>> find_first_negative([1, -2, 3])
+'found: -2'
+
+[list_07] selfの明示と属性辞書:
+>>> counter = Counter(10)
+>>> counter.bump()
+>>> counter.__dict__
+{'value': 11}
+
+[list_08] EAFP:
+>>> price_or_default({"apple": 100}, "apple")
+100
+>>> price_or_default({"apple": 100}, "banana")
+0
+
+[list_09] importは一度だけ実行される:
+>>> import list_09_import_runs_once as first
+>>> import list_09_import_runs_once as second
+>>> first is second
+True
+>>> first.import_log
+['executed']
