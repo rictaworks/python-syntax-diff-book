@@ -1,0 +1,30 @@
+検証日: 2026-07-27
+検証環境: Python 3.12.1（本リポジトリのdevcontainerは未整備のためCodespace既定環境で暫定検証。
+対象バージョンは3.13系。ENV/DEVELOPMENT.md参照。3.13でのCI実行はGitHub Actions
+（.github/workflows/ci.yml）で別途行う）
+
+$ cd code/ch02 && python3 -m pytest -v
+（実行日: 2026-07-27 / 検証環境Python: 3.12.1 ※対象バージョン3.13系はdevcontainer未整備のため暫定。ENV/DEVELOPMENT.md参照）
+
+============================= test session starts ==============================
+platform linux -- Python 3.12.1, pytest-9.1.1, pluggy-1.6.0
+rootdir: /workspaces/python-syntax-diff-book
+configfile: pyproject.toml
+collecting ... collected 0 items / 1 error
+
+==================================== ERRORS ====================================
+___________________ ERROR collecting code/ch02/test_ch02.py ____________________
+ImportError while importing test module 'code/ch02/test_ch02.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+test_ch02.py:8: in <module>
+    from list_01_tab_space_and_continuation import (
+E   ModuleNotFoundError: No module named 'list_01_tab_space_and_continuation'
+=========================== short test summary info ============================
+ERROR test_ch02.py
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+=============================== 1 error in 0.37s ===============================
+
+（第2章の全9リストが未実装の段階でテストを先に書き、期待どおり
+collectionエラーで失敗することを確認した。この後、list_01〜list_09を
+実装してgreenへ進める。）
