@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450" role="img"
+     aria-label="図2-2プレースホルダー：名前はラベル、代入はラベルの貼り替え（本番はAI生成画像に差し替え予定）">
+  <title>図2-2プレースホルダー（本番画像未生成）</title>
+  <desc>
+    figure-02-name-binding-spec.md の仕様に基づき、AI生成画像に差し替えるまでの
+    仮画像。左パネルは連鎖代入（1つの箱に3枚のラベル）、右パネルは累算代入
+    （不変intの再束縛と、可変listのその場での変更）を示す簡易下書き。
+    色ではなく実線・破線で「新しい箱」と「同じ箱」を区別する。
+  </desc>
+
+  <rect x="4" y="4" width="792" height="442" fill="#ffffff" stroke="#333333" stroke-width="3"/>
+
+  <!-- 左右パネルの区切り -->
+  <line x1="400" y1="50" x2="400" y2="400" stroke="#999999" stroke-width="1" stroke-dasharray="4,4"/>
+
+  <!-- 左パネル：連鎖代入 -->
+  <text x="200" y="65" font-family="sans-serif" font-size="16" fill="#333333" text-anchor="middle">左：連鎖代入 a = b = c = []</text>
+  <rect x="150" y="180" width="100" height="60" rx="10" fill="#ffffff" stroke="#333333" stroke-width="3"/>
+  <text x="200" y="215" font-family="sans-serif" font-size="14" fill="#333333" text-anchor="middle">[1]</text>
+
+  <!-- 3枚のラベル -->
+  <g font-family="sans-serif" font-size="13" fill="#333333" text-anchor="middle">
+    <rect x="60" y="100" width="40" height="24" rx="4" fill="#ffffff" stroke="#333333" stroke-width="2"/>
+    <text x="80" y="117">a</text>
+    <rect x="160" y="100" width="40" height="24" rx="4" fill="#ffffff" stroke="#333333" stroke-width="2"/>
+    <text x="180" y="117">b</text>
+    <rect x="260" y="100" width="40" height="24" rx="4" fill="#ffffff" stroke="#333333" stroke-width="2"/>
+    <text x="280" y="117">c</text>
+  </g>
+  <line x1="80" y1="124" x2="180" y2="180" stroke="#333333" stroke-width="2"/>
+  <line x1="180" y1="124" x2="200" y2="180" stroke="#333333" stroke-width="2"/>
+  <line x1="280" y1="124" x2="220" y2="180" stroke="#333333" stroke-width="2"/>
+
+  <text x="200" y="270" font-family="sans-serif" font-size="12" fill="#666666" text-anchor="middle">3枚のラベルが同じ1つの箱を指す</text>
+
+  <!-- 右パネル：累算代入 -->
+  <text x="600" y="65" font-family="sans-serif" font-size="16" fill="#333333" text-anchor="middle">右：累算代入 +=</text>
+
+  <!-- 不変int：再束縛 -->
+  <text x="440" y="110" font-family="sans-serif" font-size="12" fill="#333333">不変(int) value += 1</text>
+  <rect x="440" y="120" width="60" height="24" rx="4" fill="#ffffff" stroke="#333333" stroke-width="2"/>
+  <text x="470" y="137" font-family="sans-serif" font-size="12" text-anchor="middle">value</text>
+  <rect x="440" y="160" width="50" height="40" fill="#ffffff" stroke="#999999" stroke-width="2" stroke-dasharray="6,4"/>
+  <text x="465" y="184" font-family="sans-serif" font-size="13" text-anchor="middle" fill="#999999">10</text>
+  <text x="500" y="150" font-family="sans-serif" font-size="18" fill="#333333">→</text>
+  <rect x="520" y="160" width="50" height="40" fill="#ffffff" stroke="#333333" stroke-width="3"/>
+  <text x="545" y="184" font-family="sans-serif" font-size="13" text-anchor="middle" fill="#333333">11</text>
+  <text x="490" y="212" font-family="sans-serif" font-size="11" fill="#666666" text-anchor="middle">破線＝もう参照されない旧オブジェクト</text>
+
+  <!-- 可変list：その場で変更 -->
+  <text x="440" y="260" font-family="sans-serif" font-size="12" fill="#333333">可変(list) items += [3]</text>
+  <rect x="440" y="270" width="60" height="24" rx="4" fill="#ffffff" stroke="#333333" stroke-width="2"/>
+  <text x="470" y="287" font-family="sans-serif" font-size="12" text-anchor="middle">items</text>
+  <rect x="440" y="310" width="120" height="40" rx="8" fill="#ffffff" stroke="#333333" stroke-width="3"/>
+  <text x="500" y="334" font-family="sans-serif" font-size="12" text-anchor="middle" fill="#333333">[1,2] → [1,2,3]</text>
+  <line x1="470" y1="294" x2="500" y2="310" stroke="#333333" stroke-width="2"/>
+  <text x="500" y="365" font-family="sans-serif" font-size="11" fill="#666666" text-anchor="middle">同じ箱のまま中身だけ変わる</text>
+
+  <text x="400" y="30" font-family="sans-serif" font-size="20" fill="#333333" text-anchor="middle">
+    PLACEHOLDER — 図2-2（本番はAI生成画像に差し替え予定）
+  </text>
+  <text x="400" y="420" font-family="sans-serif" font-size="13" fill="#666666" text-anchor="middle">
+    詳細仕様: figures/ch02/figure-02-name-binding-spec.md
+  </text>
+</svg>
