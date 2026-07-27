@@ -10,6 +10,10 @@ from list_01_indent_error import (
 from list_02_truthy_none import classify_truthiness
 from list_03_assignment_binding import append_and_share
 from list_04_type_hint_not_enforced import add
+from list_05_list_comprehension import squares_under
+from list_06_for_else import find_first_negative
+from list_07_self_and_instance_dict import Counter
+from list_08_eafp_key_error import price_or_default
 
 
 def test_mis_indented_block_raises_indentation_error():
@@ -55,3 +59,32 @@ def test_type_hint_is_not_enforced_at_runtime():
         "b": int,
         "return": int,
     }
+
+
+def test_list_comprehension_builds_squares_in_one_line():
+    assert squares_under(5) == [0, 1, 4, 9, 16]
+
+
+def test_for_else_runs_else_only_without_break():
+    assert find_first_negative([1, 2, 3]) == "no negative value"
+    assert find_first_negative([1, -2, 3]) == "found: -2"
+
+
+def test_self_is_explicit_and_attributes_live_in_dict():
+    counter = Counter(10)
+    counter.bump()
+    assert counter.__dict__ == {"value": 11}
+
+
+def test_eafp_tries_first_and_handles_key_error():
+    prices = {"apple": 100}
+    assert price_or_default(prices, "apple") == 100
+    assert price_or_default(prices, "banana") == 0
+
+
+def test_second_import_reuses_cached_module_without_rerun():
+    import list_09_import_runs_once as first
+    import list_09_import_runs_once as second
+
+    assert second is first
+    assert second.import_log == ["executed"]

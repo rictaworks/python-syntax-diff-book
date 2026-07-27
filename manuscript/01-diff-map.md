@@ -65,7 +65,9 @@ Go/Rust）が、Pythonの12の差分ポイントのどこで最初に合流す�
 
 以降、このうち4項目（#1・#2・#3・#7）は本章のうちに実際に動かして
 確認する（1.3〜1.6節）。残りの8項目（#4〜#6、#8〜#12）は1.7節で
-要点だけを短くまとめ、詳しい挙動と実行ログは該当章に譲る。
+要点を短くまとめ、うち5項目（#4・#5・#8・#9・#11）には「一目で
+違いが分かる」最短のコードとその実行結果も添える。いずれも本格的な
+解説ではなく予告にとどめ、詳しい挙動と実行ログは該当章に譲る。
 
 ---
 
@@ -212,8 +214,10 @@ def add(a: int, b: int) -> int:
 
 ## 1.7 残り8項目の要点
 
-ここからは1.2節の表のうち、コードでは確認しなかった8項目を短く
-説明する。詳しい挙動と実行ログは、それぞれの参照章で扱う。
+ここからは1.2節の表のうち、1.3〜1.6節では確認しなかった8項目を
+短く説明する。うち#4・#5・#8・#9・#11の5項目は、他項目と同様に
+最短コードと実行結果を添える。詳しい挙動と実行ログは、それぞれの
+参照章で扱う。
 
 ### #4 list・tuple・dict・setの使い分けと内包表記
 
@@ -223,7 +227,23 @@ Rubyの配列やJavaScriptの配列は「何でも入る単一のArray」で
 tupleは不変で順序あり、dictはキー付き、setは重複なしで順序を
 保証しない。加えて`[x for x in ...]`のような内包表記が、mapや
 filterに相当する処理を1行で書くための第一級の構文として存在
-する。詳細は第3章。
+する。
+
+```python
+def squares_under(limit: int) -> list[int]:
+    """0以上limit未満の整数の2乗を内包表記で返す。"""
+    return [n * n for n in range(limit)]
+```
+
+```pycon
+>>> squares_under(5)
+[0, 1, 4, 9, 16]
+```
+
+for文とappendを3行書かずに、変換結果そのものを1行の式として
+書けている点だけを確認しておきたい。内包表記の種類（辞書・
+集合内包表記、条件分岐、入れ子）とlist・tuple・dict・setの
+使い分けの詳細は第3章で扱う。
 
 ### #5 forは常にforeachであり、for-elseとmatchがある
 
@@ -232,7 +252,30 @@ forはPythonに存在しない。`for i in range(n):`と書けば同じ結果を
 得られるが、構文としては常にforeach（イテレート可能なものを
 1つずつ取り出す）である。breakされずにループを終えたときだけ
 実行される`else`節、Rustのmatchに近いパターンマッチの`match`文
-もある。詳細は第4章。
+もある。
+
+```python
+def find_first_negative(values: list[int]) -> str:
+    """breakされずにforを終えたときだけelse節が実行される。"""
+    for value in values:
+        if value < 0:
+            message = f"found: {value}"
+            break
+    else:
+        message = "no negative value"
+    return message
+```
+
+```pycon
+>>> find_first_negative([1, 2, 3])
+'no negative value'
+>>> find_first_negative([1, -2, 3])
+'found: -2'
+```
+
+他言語には存在しない`for`専用の`else`節が、breakされずに
+ループを終えたときだけ実行されている点に注目してほしい。
+`match`文を含む制御構文の詳細は第4章で扱う。
 
 ### #6 可変デフォルト引数の罠
 
@@ -248,7 +291,30 @@ Javaの`this`やRubyの`self`は暗黙に参照できるが、Pythonの
 インスタンスメソッドは第一引数`self`を自分で明記しなければ
 ならない。インスタンス属性の実体は多くの場合`__dict__`という
 辞書であり、継承関係よりも「そのメソッドが呼べるか」で判断する
-ダックタイピングが好まれる。第7章で扱う。
+ダックタイピングが好まれる。
+
+```python
+class Counter:
+    """selfを明記した最小限のクラス。"""
+
+    def __init__(self, start: int) -> None:
+        self.value = start
+
+    def bump(self) -> None:
+        self.value += 1
+```
+
+```pycon
+>>> counter = Counter(10)
+>>> counter.bump()
+>>> counter.__dict__
+{'value': 11}
+```
+
+`bump`の第一引数`self`を書き忘れると、そもそも呼び出しの
+つじつまが合わなくなる。`counter.__dict__`を見ると、インスタンス
+属性`value`が辞書のキーとしてそのまま格納されていることが分かる。
+selfの明示・属性辞書・ダックタイピングの詳細は第7章で扱う。
 
 ### #9 例外を使った制御フロー（EAFP）
 
@@ -256,7 +322,27 @@ Javaの`this`やRubyの`self`は暗黙に参照できるが、Pythonの
 Pythonの「まず試して、失敗したら例外で対処する」（EAFP、
 「許可を求めるより謝るほうが易しい」）という設計は前提が逆に
 見える。ファイルの存在確認より先に`open()`を試みる、といった
-書き方が定石になる。第8章で扱う。
+書き方が定石になる。
+
+```python
+def price_or_default(prices: dict[str, int], item: str) -> int:
+    """キーの有無を事前確認せず、まず取得を試みる（EAFP）。"""
+    try:
+        return prices[item]
+    except KeyError:
+        return 0
+```
+
+```pycon
+>>> price_or_default({"apple": 100}, "apple")
+100
+>>> price_or_default({"apple": 100}, "banana")
+0
+```
+
+`if item in prices:`で事前確認する書き方（LBYL）も動くが、
+Pythonの定石はまず`prices[item]`を試し、`KeyError`で対処する
+ほうである。EAFPの詳細は第8章で扱う。
 
 ### #10 イテレータ・ジェネレータによる遅延評価とwith
 
@@ -272,7 +358,25 @@ try-with-resourcesに近いが、独自のプロトコルとして自作でき�
 そのモジュールのトップレベルコードが1度だけ実行される。以降の
 importはキャッシュされたモジュールオブジェクトを再利用する
 だけになる。`__name__ == "__main__"`によるスクリプトと
-ライブラリの切り替えも、この実行モデルに由来する。第10章で扱う。
+ライブラリの切り替えも、この実行モデルに由来する。
+
+```python
+import_log: list[str] = []
+import_log.append("executed")
+```
+
+```pycon
+>>> import list_09_import_runs_once as first
+>>> import list_09_import_runs_once as second
+>>> first is second
+True
+>>> first.import_log
+['executed']
+```
+
+2回目の`import`文を実行しても`import_log`は増えず、`first`と
+`second`は同一のモジュールオブジェクトを指している。importの
+実行モデルの詳細は第10章で扱う。
 
 ### #12 標準ライブラリだけで完結する範囲が広い
 

@@ -15,3 +15,31 @@ E   ModuleNotFoundError: No module named 'list_01_indent_error'
 ERROR test_ch01.py
 !!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
 =============================== 1 error in 0.43s ===============================
+
+---
+
+## 追記（issue #9: 第1章のコードリストを18本目標に合わせて5本追加）
+
+requirements.md 5.2「デモ版で実際に作成する件数」の目標18本に対し、
+ch01が4本・ch02が9本の計13本しかなく5本不足していたため、
+第1章1.7節の残り8項目のうち5項目（#4・#5・#8・#9・#11）へ予告
+コードを追加する。実装前にtest_ch01.pyへ未実装モジュールの
+importとテストを追加し、赤にした。
+
+$ python3 -m pytest code/ch01/test_ch01.py -v
+（実行日: 2026-07-27 / 検証環境Python: 3.12.1）
+
+============================= test session starts ==============================
+platform linux -- Python 3.12.1, pytest-9.1.1, pluggy-1.6.0
+collected 0 items / 1 error
+
+==================================== ERRORS ====================================
+ERROR code/ch01/test_ch01.py
+ImportError while importing test module '.../code/ch01/test_ch01.py'.
+test_ch01.py:13: in <module>
+    from list_05_list_comprehension import squares_under
+E   ModuleNotFoundError: No module named 'list_05_list_comprehension'
+=========================== short test summary info ============================
+ERROR test_ch01.py
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+=============================== 1 error in 0.18s ===============================
