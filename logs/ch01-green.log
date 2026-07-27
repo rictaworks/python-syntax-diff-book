@@ -1,0 +1,50 @@
+検証日: 2026-07-27
+検証環境: Python 3.12.1（本リポジトリのdevcontainerは未整備のためCodespace既定環境で暫定検証。
+対象バージョンは3.13系。ENV/DEVELOPMENT.md参照。3.13でのCI実行はGitHub Actions
+（.github/workflows/ci.yml）で別途行う）
+
+$ python3 -m pytest -v
+============================= test session starts ==============================
+platform linux -- Python 3.12.1, pytest-9.1.1, pluggy-1.6.0
+collecting ... collected 5 items
+
+test_ch01.py::test_mis_indented_block_raises_indentation_error PASSED    [ 20%]
+test_ch01.py::test_classify_truthiness_treats_zero_empty_and_none_as_false PASSED [ 40%]
+test_ch01.py::test_none_is_singleton_and_not_equal_to_false PASSED       [ 60%]
+test_ch01.py::test_append_and_share_mutates_through_both_names PASSED    [ 80%]
+test_ch01.py::test_type_hint_is_not_enforced_at_runtime PASSED           [100%]
+
+============================== 5 passed in 0.03s ===============================
+
+$ python3 -m ruff check .
+All checks passed!
+
+--- 各リストの観測出力（本文の実行ログに転記） ---
+
+[list_01] IndentationErrorの実演:
+IndentationError: unindent does not match any outer indentation level (<snippet>, line 3)
+
+[list_02] 真偽判定とNone:
+>>> classify_truthiness([0, "", [], None, 1, "a", [0]])
+[False, False, False, False, True, True, True]
+>>> None is None
+True
+>>> None == False
+False
+
+[list_03] 代入は名前の束縛:
+>>> origin = [1, 2]
+>>> alias = origin
+>>> append_and_share(alias, 3)
+>>> origin
+[1, 2, 3]
+>>> alias
+[1, 2, 3]
+>>> origin is alias
+True
+
+[list_04] 型ヒントは実行時に強制されない:
+>>> add("foo", "bar")
+'foobar'
+>>> add.__annotations__
+{'a': <class 'int'>, 'b': <class 'int'>, 'return': <class 'int'>}
