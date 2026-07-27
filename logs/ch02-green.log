@@ -1,0 +1,116 @@
+検証日: 2026-07-27
+検証環境: Python 3.12.1（本リポジトリのdevcontainerは未整備のためCodespace既定環境で暫定検証。
+対象バージョンは3.13系。ENV/DEVELOPMENT.md参照。3.13でのCI実行はGitHub Actions
+（.github/workflows/ci.yml）で別途行う）
+
+$ cd code/ch02 && python3 -m pytest -v
+============================= test session starts ==============================
+platform linux -- Python 3.12.1, pytest-9.1.1, pluggy-1.6.0
+rootdir: /workspaces/python-syntax-diff-book
+configfile: pyproject.toml
+collecting ... collected 20 items
+
+test_ch02.py::test_tab_space_mixing_raises_tab_error PASSED              [  5%]
+test_ch02.py::test_implicit_line_continuation_sums_without_backslash PASSED [ 10%]
+test_ch02.py::test_assignment_inside_condition_is_syntax_error PASSED    [ 15%]
+test_ch02.py::test_walrus_operator_binds_and_returns_value_in_condition PASSED [ 20%]
+test_ch02.py::test_len_zero_object_is_falsy_even_without_bool PASSED     [ 25%]
+test_ch02.py::test_plain_object_without_len_or_bool_is_always_truthy PASSED [ 30%]
+test_ch02.py::test_none_is_a_stable_singleton PASSED                     [ 35%]
+test_ch02.py::test_default_none_argument_idiom PASSED                    [ 40%]
+test_ch02.py::test_chained_assignment_binds_one_object_to_three_names PASSED [ 45%]
+test_ch02.py::test_augmented_assignment_on_int_creates_new_object PASSED [ 50%]
+test_ch02.py::test_augmented_assignment_on_list_mutates_same_object PASSED [ 55%]
+test_ch02.py::test_rebind_inside_function_does_not_affect_caller PASSED  [ 60%]
+test_ch02.py::test_mutate_in_place_is_visible_to_caller PASSED           [ 65%]
+test_ch02.py::test_small_int_cache_range_is_shared_but_257_is_not PASSED [ 70%]
+test_ch02.py::test_custom_eq_can_diverge_from_identity PASSED            [ 75%]
+test_ch02.py::test_tuple_item_assignment_raises_type_error PASSED        [ 80%]
+test_ch02.py::test_tuple_allows_mutation_of_contained_list PASSED        [ 85%]
+test_ch02.py::test_shallow_copy_shares_nested_objects PASSED             [ 90%]
+test_ch02.py::test_deep_copy_does_not_share_nested_objects PASSED        [ 95%]
+test_ch02.py::test_stdlib_copy_module_used_directly_matches_helpers PASSED [100%]
+
+============================== 20 passed in 0.12s ==============================
+
+$ python3 -m ruff check .
+All checks passed!
+
+$ cd /workspaces/python-syntax-diff-book && python3 -m pytest -v   # 第1・2章合算
+============================== 25 passed in 0.11s ===============================
+
+--- 各リストの観測出力（本文の実行ログに転記） ---
+
+[list_01] タブ・スペース混在とTabError／暗黙の行継続:
+>>> compile_snippet(build_tab_space_mixed_source())
+TabError: inconsistent use of tabs and spaces in indentation (<snippet>, line 3)
+>>> sum_across_continued_lines(4, 5, 6)
+15
+
+[list_02] 代入は式ではなく文（walrus演算子との対比）:
+>>> compile_snippet(build_assignment_in_condition_source())
+SyntaxError: invalid syntax. Maybe you meant '==' or ':=' instead of '='? (<snippet>, line 2)
+>>> evaluate_with_walrus(6)
+12
+>>> evaluate_with_walrus(3)
+None
+
+[list_03] __len__/__bool__による真偽判定:
+>>> bool(SizedContainer(0))
+False
+>>> bool(SizedContainer(3))
+True
+>>> bool(AlwaysTruthy())
+True
+
+[list_04] Noneのシングルトン性とデフォルト引数の慣用句:
+>>> get_none_identity_pair()
+(109147745233600, 109147745233600)
+>>> greet(None)
+'hello, world'
+>>> greet("Python")
+'hello, Python'
+
+[list_05] 連鎖代入と累算代入:
+>>> a, b, c = bind_same_list_to_three_names()
+>>> a is b, b is c
+(True, True)
+>>> a.append(1); b
+[1]
+>>> increment_and_track_identity(10)
+(11, False)
+>>> append_and_track_identity([1, 2], 3)
+([1, 2, 3], True)
+
+[list_06] 引数の再束縛と変更:
+>>> rebind_only(5)
+6
+>>> items = [1, 2]; mutate_in_place(items); items
+[1, 2, 99]
+
+[list_07] isと==（小さいintのキャッシュとカスタム__eq__）:
+>>> create_two_ints_via_separate_compilations(200)  # -5〜256の範囲
+(200, 200)  # a is b -> True
+>>> create_two_ints_via_separate_compilations(257)  # 範囲外
+(257, 257)  # a is b -> False
+>>> AlwaysEqual() == AlwaysEqual()
+True
+>>> AlwaysEqual() is AlwaysEqual()
+False
+
+[list_08] tupleは浅く不変:
+>>> point = build_point_with_mutable_tail()
+>>> reassign_first_element(point, 99)
+TypeError: 'tuple' object does not support item assignment
+>>> append_to_tail(point, 4)
+(1, [2, 3, 4])
+
+[list_09] 浅いコピーと深いコピー:
+>>> original = [[1, 2], [3, 4]]
+>>> shallow = shallow_copy_nested_list(original)
+>>> deep = deep_copy_nested_list(original)
+>>> original[0].append("shared")
+>>> shallow[0]
+[1, 2, 'shared']
+>>> deep[0]
+[1, 2]
