@@ -10,3 +10,12 @@ SPEC/
 TASKS/
 WORK/
 
+# EPUBビルドの生成物（build/epub.shの出力先）。
+# ソースではなく成果物のためコミットしない。
+build/output/
+*.epub
+
+# pytest実行時に生成されるPythonキャッシュ。
+__pycache__/
+*.pyc
+

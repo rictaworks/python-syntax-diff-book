@@ -14,3 +14,11 @@ line-length = 100
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I"]
+
+[tool.pytest.ini_options]
+# pytestは既定でディレクトリ名"build"を収集対象から除外する
+# （norecursedirsの既定値にsetuptools等の慣習で"build"が含まれるため）。
+# 本リポジトリではrequirements.md §12の規約により"build/"を
+# ビルドスクリプトの実体パスとして使うため、明示的にtestpathsへ加え、
+# `pytest`をどこから実行してもbuild/配下のテストが収集されるようにする。
+testpaths = ["code", "build"]
