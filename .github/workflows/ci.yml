@@ -30,6 +30,23 @@ jobs:
             echo "コードリストのテストがまだ存在しません（原稿未着手のためスキップ）"
           fi
 
+      - name: Install EPUB build tools (if build script exists)
+        run: |
+          if [ -x "build/epub.sh" ]; then
+            sudo apt-get update
+            sudo apt-get install -y pandoc epubcheck default-jre-headless
+          else
+            echo "EPUBビルドスクリプトが未整備のため依存パッケージのインストールをスキップ"
+          fi
+
+      - name: Lint code listing width (if lint script exists)
+        run: |
+          if [ -f "build/lint_code_width.py" ]; then
+            python build/lint_code_width.py --verbose
+          else
+            echo "コード桁数lintスクリプトが未整備のためスキップ"
+          fi
+
       - name: Validate EPUB build (if build script exists)
         run: |
           if [ -x "build/epub.sh" ]; then

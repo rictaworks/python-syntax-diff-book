@@ -1,0 +1,6 @@
+{
+  "_comment": "manuscript配下のコードリスト（フェンスコードブロック）の桁数上限設定。Kindleのリフロー型EPUBで横スクロールなしに読める幅を基準にしている。",
+  "max_line_width": 70,
+  "target_fence_languages": ["python", "pycon"],
+  "target_directory": "manuscript"
+}
