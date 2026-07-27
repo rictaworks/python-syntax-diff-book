@@ -61,7 +61,8 @@ def compile_snippet(source: str):
 
 ```pycon
 >>> compile_snippet(build_tab_space_mixed_source())
-TabError: inconsistent use of tabs and spaces in indentation (<snippet>, line 3)
+TabError: inconsistent use of tabs and spaces in
+indentation (<snippet>, line 3)
 ```
 
 1行目の`print('a')`はタブ1つで、2行目の`print('b')`はスペース8個で
@@ -123,7 +124,8 @@ def build_assignment_in_condition_source() -> str:
 
 ```pycon
 >>> compile_snippet(build_assignment_in_condition_source())
-SyntaxError: invalid syntax. Maybe you meant '==' or ':=' instead of '='? (<snippet>, line 2)
+SyntaxError: invalid syntax. Maybe you meant '==' or ':=' instead
+of '='? (<snippet>, line 2)
 ```
 
 エラーメッセージ自体が「`==`か`:=`の間違いでは」と提案してくる点に
