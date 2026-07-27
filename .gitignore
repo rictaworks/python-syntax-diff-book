@@ -1,0 +1,12 @@
+.env
+.claude/
+requirements.md
+app-ui/
+CLIENT/
+DEBUG/
+DELETE/
+ENV/
+SPEC/
+TASKS/
+WORK/
+
