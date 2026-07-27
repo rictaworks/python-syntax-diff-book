@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450" role="img"
+     aria-label="図2-4プレースホルダー：浅いコピーと深いコピーの構造図（本番はAI生成画像に差し替え予定）">
+  <title>図2-4プレースホルダー（本番画像未生成）</title>
+  <desc>
+    figure-04-shallow-deep-copy-spec.md の仕様に基づき、AI生成画像に差し替えるまでの
+    仮画像。original・shallow・deepの3列を並べ、shallowはoriginalの内側の箱を
+    実線の合流矢印で共有し、deepは破線・ハッチングの新しい内側の箱を持つことを示す。
+  </desc>
+
+  <rect x="4" y="4" width="792" height="442" fill="#ffffff" stroke="#333333" stroke-width="3"/>
+
+  <!-- 列見出し -->
+  <text x="130" y="55" font-family="sans-serif" font-size="15" text-anchor="middle" fill="#333333">original</text>
+  <text x="400" y="55" font-family="sans-serif" font-size="15" text-anchor="middle" fill="#333333">shallow（浅いコピー）</text>
+  <text x="670" y="55" font-family="sans-serif" font-size="15" text-anchor="middle" fill="#333333">deep（深いコピー）</text>
+
+  <!-- original 外側の箱 -->
+  <rect x="80" y="80" width="100" height="40" rx="8" fill="#ffffff" stroke="#333333" stroke-width="3"/>
+  <text x="130" y="105" font-family="sans-serif" font-size="12" text-anchor="middle" fill="#333333">original</text>
+  <!-- original 内側の箱 A, B -->
+  <rect x="60" y="170" width="60" height="36" rx="6" fill="#ffffff" stroke="#333333" stroke-width="2"/>
+  <text x="90" y="192" font-family="sans-serif" font-size="11" text-anchor="middle" fill="#333333">A[1,2]</text>
+  <rect x="140" y="170" width="60" height="36" rx="6" fill="#ffffff" stroke="#333333" stroke-width="2"/>
+  <text x="170" y="192" font-family="sans-serif" font-size="11" text-anchor="middle" fill="#333333">B[3,4]</text>
+  <line x1="110" y1="120" x2="90" y2="170" stroke="#333333" stroke-width="2"/>
+  <line x1="150" y1="120" x2="170" y2="170" stroke="#333333" stroke-width="2"/>
+
+  <!-- shallow 外側の箱 -->
+  <rect x="360" y="80" width="100" height="40" rx="8" fill="#ffffff" stroke="#333333" stroke-width="3"/>
+  <text x="410" y="105" font-family="sans-serif" font-size="12" text-anchor="middle" fill="#333333">shallow</text>
+  <!-- shallowの矢印はoriginalの内側の箱A,Bへ合流(共有) -->
+  <line x1="390" y1="120" x2="90" y2="170" stroke="#333333" stroke-width="2"/>
+  <line x1="430" y1="120" x2="170" y2="170" stroke="#333333" stroke-width="2"/>
+  <text x="260" y="150" font-family="sans-serif" font-size="11" fill="#666666" text-anchor="middle">同じ内側の箱を共有（実線）</text>
+
+  <!-- deep 外側の箱 -->
+  <rect x="620" y="80" width="100" height="40" rx="8" fill="#ffffff" stroke="#333333" stroke-width="3"/>
+  <text x="670" y="105" font-family="sans-serif" font-size="12" text-anchor="middle" fill="#333333">deep</text>
+  <!-- deep 内側の箱 A', B' (破線+ハッチング) -->
+  <rect x="600" y="170" width="60" height="36" rx="6" fill="#ffffff" stroke="#333333" stroke-width="2" stroke-dasharray="6,4"/>
+  <text x="630" y="192" font-family="sans-serif" font-size="11" text-anchor="middle" fill="#333333">A'[1,2]</text>
+  <rect x="680" y="170" width="60" height="36" rx="6" fill="#ffffff" stroke="#333333" stroke-width="2" stroke-dasharray="6,4"/>
+  <text x="710" y="192" font-family="sans-serif" font-size="11" text-anchor="middle" fill="#333333">B'[3,4]</text>
+  <line x1="650" y1="120" x2="630" y2="170" stroke="#333333" stroke-width="2" stroke-dasharray="6,4"/>
+  <line x1="690" y1="120" x2="710" y2="170" stroke="#333333" stroke-width="2" stroke-dasharray="6,4"/>
+  <text x="670" y="150" font-family="sans-serif" font-size="11" fill="#666666" text-anchor="middle">複製された別の箱（破線）</text>
+
+  <!-- 下部：変更の波及/遮断 -->
+  <line x1="20" y1="240" x2="780" y2="240" stroke="#999999" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="130" y="265" font-family="sans-serif" font-size="12" text-anchor="middle" fill="#333333">original[0].append("shared")</text>
+
+  <line x1="90" y1="280" x2="90" y2="320" stroke="#333333" stroke-width="2" stroke-dasharray="2,4"/>
+  <text x="90" y="335" font-family="sans-serif" font-size="20" text-anchor="middle" fill="#333333">↓</text>
+
+  <line x1="90" y1="280" x2="390" y2="320" stroke="#333333" stroke-width="2" stroke-dasharray="2,4"/>
+  <text x="400" y="345" font-family="sans-serif" font-size="12" text-anchor="middle" fill="#333333">shallow[0]にも波及（点線の波及矢印）</text>
+
+  <line x1="90" y1="280" x2="630" y2="320" stroke="#333333" stroke-width="1" stroke-dasharray="1,3"/>
+  <text x="640" y="300" font-family="sans-serif" font-size="20" fill="#333333">×</text>
+  <text x="670" y="345" font-family="sans-serif" font-size="12" text-anchor="middle" fill="#333333">deep[0]には波及しない（×で遮断）</text>
+
+  <text x="400" y="30" font-family="sans-serif" font-size="20" fill="#333333" text-anchor="middle">
+    PLACEHOLDER — 図2-4（本番はAI生成画像に差し替え予定）
+  </text>
+  <text x="400" y="435" font-family="sans-serif" font-size="13" fill="#666666" text-anchor="middle">
+    詳細仕様: figures/ch02/figure-04-shallow-deep-copy-spec.md
+  </text>
+</svg>
