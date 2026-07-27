@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450" role="img"
+     aria-label="図1-2プレースホルダー：読者タイプ別の推奨ルート路線図（本番はAI生成画像に差し替え予定）">
+  <title>図1-2プレースホルダー（本番画像未生成）</title>
+  <desc>
+    figure-02-reader-routes-spec.md の仕様に基づき、AI生成画像に差し替えるまでの
+    仮画像。色のみに依存しないよう、実線・破線・点線・二重線の4種の線で
+    P1〜P4の4路線を区別する構成を示す簡易下書き。
+  </desc>
+
+  <rect x="4" y="4" width="792" height="442" fill="#ffffff" stroke="#333333" stroke-width="3"/>
+
+  <!-- 共通の合流区間（1章・2章） -->
+  <line x1="60" y1="225" x2="220" y2="225" stroke="#333333" stroke-width="5"/>
+  <circle cx="100" cy="225" r="14" fill="#ffffff" stroke="#333333" stroke-width="2"/>
+  <circle cx="180" cy="225" r="14" fill="#ffffff" stroke="#333333" stroke-width="2"/>
+  <text x="100" y="230" font-family="sans-serif" font-size="13" text-anchor="middle" fill="#333333">1章</text>
+  <text x="180" y="230" font-family="sans-serif" font-size="13" text-anchor="middle" fill="#333333">2章</text>
+
+  <!-- P1: 実線 -->
+  <polyline points="220,225 300,90 400,90 500,90 600,90" fill="none" stroke="#333333" stroke-width="3"/>
+  <!-- P2: 破線 -->
+  <polyline points="220,225 300,160 400,160 500,160 600,160" fill="none" stroke="#333333" stroke-width="3" stroke-dasharray="10,6"/>
+  <!-- P3: 点線 -->
+  <polyline points="220,225 300,290 400,290 500,290 600,290" fill="none" stroke="#333333" stroke-width="3" stroke-dasharray="2,5"/>
+  <!-- P4: 二重線（の見立て：2本の平行線） -->
+  <polyline points="220,225 300,358 400,358 500,358 600,358" fill="none" stroke="#333333" stroke-width="2"/>
+  <polyline points="220,229 300,362 400,362 500,362 600,362" fill="none" stroke="#333333" stroke-width="2"/>
+
+  <g font-family="sans-serif" font-size="13" text-anchor="middle" fill="#333333">
+    <text x="300" y="85">5章</text><text x="400" y="85">7章</text><text x="500" y="85">6章</text>
+    <text x="300" y="155">3章</text><text x="400" y="155">10章</text><text x="500" y="155">6章</text>
+    <text x="300" y="285">3章</text><text x="400" y="285">9章</text><text x="500" y="285">5章</text>
+    <text x="300" y="352">8章</text><text x="400" y="352">6章</text><text x="500" y="352">7章</text>
+  </g>
+
+  <g font-family="sans-serif" font-size="14" fill="#333333">
+    <text x="620" y="94">P1（実線）</text>
+    <text x="620" y="164">P2（破線）</text>
+    <text x="620" y="294">P3（点線）</text>
+    <text x="620" y="362">P4（二重線）</text>
+  </g>
+
+  <text x="400" y="30" font-family="sans-serif" font-size="20" fill="#333333" text-anchor="middle">
+    PLACEHOLDER — 図1-2（本番はAI生成画像に差し替え予定）
+  </text>
+  <text x="400" y="420" font-family="sans-serif" font-size="13" fill="#666666" text-anchor="middle">
+    詳細仕様: figures/ch01/figure-02-reader-routes-spec.md
+  </text>
+</svg>
