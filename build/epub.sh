@@ -168,6 +168,7 @@ build_epub_with_pandoc() {
         --toc
         --split-level="${split_level}"
         -t "${target_format}"
+        --resource-path="${repo_root}/manuscript:${repo_root}"
     )
 
     if [[ -f "${style_css_path}" ]]; then
