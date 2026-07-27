@@ -1,0 +1,16 @@
+[project]
+name = "python-syntax-diff-book"
+version = "0.1.0"
+description = "「差分で読むPython文法」デモ版の制作用ツール依存定義"
+requires-python = "==3.13.14"
+dependencies = [
+    "pytest",
+    "ruff",
+]
+
+[tool.ruff]
+target-version = "py313"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
