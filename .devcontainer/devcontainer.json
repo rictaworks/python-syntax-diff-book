@@ -6,7 +6,7 @@
       "version": "3.13.14"
     }
   },
-  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y pandoc epubcheck default-jre-headless && pip install --no-cache-dir -r requirements-lock.txt",
+  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y pandoc epubcheck default-jre-headless librsvg2-bin && pip install --no-cache-dir -r requirements-lock.txt",
   "customizations": {
     "vscode": {
       "extensions": [
